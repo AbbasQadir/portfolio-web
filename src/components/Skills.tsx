@@ -19,21 +19,27 @@ const Skills = () => {
     { name: "Next.js", level: 85, category: "frontend" },
     { name: "Tailwind CSS", level: 90, category: "frontend" },
     { name: "Framer Motion", level: 75, category: "frontend" },
+    { name: "shadcn/UI", level: 80, category: "frontend" },
     
     // Backend
     { name: "Node.js", level: 80, category: "backend" },
     { name: "Express.js", level: 75, category: "backend" },
-    { name: "MongoDB", level: 70, category: "backend" },
-    { name: "PostgreSQL", level: 65, category: "backend" },
-    { name: "GraphQL", level: 60, category: "backend" },
+    { name: "PostgreSQL", level: 85, category: "backend" },
+    { name: "Python", level: 80, category: "backend" },
+    { name: "PHP", level: 75, category: "backend" },
+    { name: "MySql", level: 75, category: "backend" },
     
-    // Tools & Others
-    { name: "Git & GitHub", level: 85, category: "tools" },
-    { name: "Docker", level: 65, category: "tools" },
-    { name: "CI/CD", level: 70, category: "tools" },
-    { name: "Jest", level: 75, category: "tools" },
-    { name: "Figma", level: 80, category: "tools" },
-    { name: "UI/UX Design", level: 75, category: "tools" },
+    
+
+    
+ // Tools & Others
+{ name: "Git & GitHub", level: 85, category: "tools" },
+{ name: "Figma", level: 80, category: "tools" },
+{ name: "UI/UX Design", level: 75, category: "tools" },
+{ name: "VS Code", level: 90, category: "tools" },
+{ name: "Vercel", level: 85, category: "tools" },
+{ name: "Trello", level: 82, category: "tools" },
+
   ];
 
   const [activeCategory, setActiveCategory] = useState<string>("all");
