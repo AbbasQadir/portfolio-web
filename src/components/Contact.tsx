@@ -27,26 +27,28 @@ const Contact = () => {
     setSubmitError(false);
     
     try {
-      // Using FormSubmit with the activation code instead of email
-      const response = await fetch("6b90d8cf13ad2a103b53a0ab9510abbb", {
+      // FormSubmit expects a proper URL and form data format
+      const endpoint = "https://formsubmit.co/6b90d8cf13ad2a103b53a0ab9510abbb";
+      
+      // Create FormData object
+      const formDataObj = new FormData();
+      formDataObj.append("name", formData.name);
+      formDataObj.append("email", formData.email);
+      formDataObj.append("subject", formData.subject);
+      formDataObj.append("message", formData.message);
+      formDataObj.append("_captcha", "false");
+
+      const response = await fetch(endpoint, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-          _captcha: false
-        }),
+        body: formDataObj,
+        // Don't set Content-Type header, let the browser set it with boundary parameter
       });
       
       if (response.ok) {
         setSubmitSuccess(true);
         setFormData({ name: "", email: "", subject: "", message: "" });
       } else {
+        console.error("Form submission failed with status:", response.status);
         throw new Error("Form submission failed");
       }
     } catch (error) {
