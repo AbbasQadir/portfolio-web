@@ -43,33 +43,7 @@ const Projects = () => {
       link: "https://github.com/AbbasQadir/Team-1", // Add your library link here
       category: "javascript"
     },
-    {
-      id: 1,
-      title: "Solostack",
-      description: "A startup company focused on providing solo developers with tools and resources to build and scale their business efficiently.",
-      tech: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase"],
-      image: "/proj-1.png",
-      link: "https://github.com/AbbasQadir/solostacked", // Add your Solostack link here
-      category: "startup"
-    },
-    {
-      id: 2,
-      title: "Construction Company Website",
-      description: "Modern and responsive website for a construction company, featuring project portfolios, service listings, and client testimonials.",
-      tech: ["HTML", "CSS", "JS", "Bootstrap"],
-      image: "/proj-2.png", // Replace with your image path
-      link: "#", // Add your construction website link here
-      category: "web"
-    },
-    {
-      id: 3,
-      title: "Mind & Motion E-commerce",
-      description: "University Team Project- A e-commerce website that helps users achieve their health and fitness goals while supporting their hobbies, offering a wide range of products with all core functionalities of a typical e-commerce site.",
-      tech: ["PHP", "HTML", "CSS", "JS", "MySQL"],
-      image: "/proj-3.png", // Replace with your image path
-      link: "https://github.com/AbbasQadir/Team-1", // Add your library link here
-      category: "javascript"
-    },
+  
   ];
 
   const [imageErrors, setImageErrors] = useState<{ [key: number]: boolean }>({});

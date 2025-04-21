@@ -9,11 +9,11 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gray-50 text-gray-800">
+    <main className="min-h-screen bg-gray-100 text-gray-800" >
       <Navbar />
       <Hero />
       <About />
-      <Projects />
+      <Projects/>
       <Skills />
       <Contact />
       <Footer />
