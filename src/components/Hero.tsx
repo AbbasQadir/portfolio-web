@@ -91,7 +91,10 @@ const Hero = () => {
             <Typewriter />
 
             <p className="text-lg text-gray-500">
-            I help companies modernize their digital presence through custom web development. I transform slow, outdated websites into fast-loading applications that rank higher on Google, attract more clients, and convert visitors into paying customers.
+              I help companies modernize their digital presence through custom
+              web development. I transform slow, outdated websites into
+              fast-loading applications that rank higher on Google, attract more
+              clients, and convert visitors into paying customers.
             </p>
 
             <div className="pt-4 flex flex-wrap gap-4">
