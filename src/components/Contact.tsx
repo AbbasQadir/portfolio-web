@@ -26,14 +26,32 @@ const Contact = () => {
     setSubmitSuccess(false);
     setSubmitError(false);
     
-    // Simulate form submission
     try {
-      // Replace with your actual form submission logic
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setSubmitSuccess(true);
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      // Using FormSubmit with the activation code instead of email
+      const response = await fetch("6b90d8cf13ad2a103b53a0ab9510abbb", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          _captcha: false
+        }),
+      });
+      
+      if (response.ok) {
+        setSubmitSuccess(true);
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        throw new Error("Form submission failed");
+      }
     } catch (error) {
       setSubmitError(true);
+      console.error("Form submission error:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -63,6 +81,10 @@ const Contact = () => {
             transition={{ duration: 0.8 }}
           >
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Hidden fields for FormSubmit configuration */}
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_subject" value="New Contact from Portfolio Website" />
+              
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
                 <input
@@ -186,7 +208,7 @@ const Contact = () => {
                   </div>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-gray-900">Email</p>
-                    <p className="text-sm text-gray-500">contact@yourname.com</p>
+                    <p className="text-sm text-gray-500">Abbasqalami2004@gmail.com</p>
                   </div>
                 </div>
                 <div className="flex items-start">
@@ -198,7 +220,7 @@ const Contact = () => {
                   </div>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-gray-900">Location</p>
-                    <p className="text-sm text-gray-500">San Francisco, CA</p>
+                    <p className="text-sm text-gray-500">West Midlands, United Kingdom</p>
                   </div>
                 </div>
                 <div className="flex items-start">
@@ -209,7 +231,7 @@ const Contact = () => {
                   </div>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-gray-900">Working Hours</p>
-                    <p className="text-sm text-gray-500">Monday - Friday, 9:00 AM - 5:00 PM PST</p>
+                    <p className="text-sm text-gray-500">Monday - Friday, 9:00 AM - 5:00 PM</p>
                   </div>
                 </div>
               </div>
@@ -220,7 +242,7 @@ const Contact = () => {
               <div className="flex space-x-5 justify-center">
                 {/* GitHub */}
                 <a 
-                  href="https://github.com/yourusername" 
+                  href="https://github.com/AbbasQadir" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-gray-500 hover:text-gray-900 transition-colors duration-300"
@@ -231,24 +253,13 @@ const Contact = () => {
                 </a>
                 {/* LinkedIn */}
                 <a 
-                  href="https://linkedin.com/in/yourusername" 
+                  href="https://www.linkedin.com/in/abbas-qadir-b37676212/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-gray-500 hover:text-gray-900 transition-colors duration-300"
                 >
                   <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"/>
-                  </svg>
-                </a>
-                {/* Twitter */}
-                <a 
-                  href="https://twitter.com/yourusername" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-gray-500 hover:text-gray-900 transition-colors duration-300"
-                >
-                  <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"/>
                   </svg>
                 </a>
               </div>
@@ -258,7 +269,8 @@ const Contact = () => {
               <h3 className="text-xl font-semibold mb-4">Open to Opportunities</h3>
               <p className="mb-4">I'm currently available for freelance work or full-time positions. If you have a project that needs my expertise, don't hesitate to reach out!</p>
               <a 
-                href="/resume.pdf" 
+                href="/AbbasQ-cv.pdf" 
+                download={true} 
                 className="inline-block bg-white text-purple-700 px-4 py-2 rounded-md font-medium transition-all duration-300 hover:bg-gray-100 hover:shadow-md"
                 target="_blank"
                 rel="noopener noreferrer"
