@@ -144,7 +144,7 @@ const Projects = () => {
         
         <div className="mt-12 text-center">
           <a 
-            href="https://github.com/AbbasQadir" 
+            href="https://github.com/AbbasQadir?tab=repositories" 
             className="inline-flex items-center text-purple-600 hover:text-purple-800 font-medium transition-colors duration-300"
             target="_blank"
             rel="noopener noreferrer"
