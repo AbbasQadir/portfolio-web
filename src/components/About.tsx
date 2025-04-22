@@ -79,7 +79,7 @@ const About = () => {
                 </a>
                 {/* Resume Icon - Document/CV Style */}
                 <a
-                  href="/AbbasQ-cv.pdf"
+                  href="/AbbasQ_cv.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   title="View Resume"

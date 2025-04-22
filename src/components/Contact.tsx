@@ -271,7 +271,7 @@ const Contact = () => {
               <h3 className="text-xl font-semibold mb-4">Open to Opportunities</h3>
               <p className="mb-4">I'm currently available for freelance work or full-time positions. If you have a project that needs my expertise, don't hesitate to reach out!</p>
               <a 
-                href="/AbbasQ-cv.pdf" 
+                href="/AbbasQ_cv.pdf" 
                 download={true} 
                 className="inline-block bg-white text-purple-700 px-4 py-2 rounded-md font-medium transition-all duration-300 hover:bg-gray-100 hover:shadow-md"
                 target="_blank"
