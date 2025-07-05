@@ -3,12 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const roles = [
-  "Software Engineer",
-  "Web Developer",
-  "Full Stack Developer",
-  "Tech Enthusiast",
-];
+const roles = ["Web Designer", "Web Developer", "UI & UX Designer"];
 
 const Typewriter = () => {
   const [index, setIndex] = useState(0);
@@ -24,7 +19,7 @@ const Typewriter = () => {
         setSubIndex((prev) => (deleting ? prev - 1 : prev + 1));
 
         if (!deleting && subIndex === roles[index].length) {
-          setTimeout(() => setDeleting(true), 1000);
+          setTimeout(() => setDeleting(true), 1500);
         } else if (deleting && subIndex === 0) {
           setDeleting(false);
           setIndex((prev) => (prev + 1) % roles.length);
@@ -34,7 +29,7 @@ const Typewriter = () => {
     );
 
     return () => clearTimeout(timeout);
-  }, [subIndex, deleting]);
+  }, [subIndex, deleting, index]);
 
   useEffect(() => {
     const blinkInterval = setInterval(() => {
@@ -44,7 +39,7 @@ const Typewriter = () => {
   }, []);
 
   return (
-    <p className="text-xl md:text-2xl text-gray-600">
+    <p className="text-2xl md:text-3xl text-blue-600 font-semibold">
       {roles[index].substring(0, subIndex)}
       <span
         className={`${blink ? "opacity-100" : "opacity-0"} transition-opacity`}
@@ -69,38 +64,52 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="pt-24 min-h-screen flex flex-col justify-center"
+      className="pt-24 min-h-screen flex flex-col justify-center bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/30"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div
-            className="space-y-6"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            className="space-y-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <h1 className="text-4xl md:text-6xl font-bold">
-              Hello, I'm{" "}
-              <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                Abbas 
-              </span>
-            </h1>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="space-y-4"
+            >
+              <h1 className="text-5xl md:text-7xl font-bold leading-tight">
+                Hi, I'm{" "}
+                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                  Abbas
+                </span>
+              </h1>
 
-            {/* Animated Typewriter Line */}
+              {/* Animated Typewriter */}
+              <Typewriter />
+            </motion.div>
 
-            <Typewriter />
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-xl text-gray-600 leading-relaxed max-w-lg"
+            >
+              Creating intuitive and engaging digital experiences that help
+              businesses grow and succeed online.
+            </motion.p>
 
-            <p className="text-lg text-gray-500">
-              I help companies modernize their digital presence through custom
-              web development. I transform slow, outdated websites into
-              fast-loading applications that rank higher on Google, attract more
-              clients, and convert visitors into paying customers.
-            </p>
-
-            <div className="pt-4 flex flex-wrap gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="flex flex-wrap gap-4"
+            >
               <motion.button
                 onClick={() => scrollToSection("projects")}
-                className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium py-2 px-6 rounded-full shadow-lg hover:shadow-xl transition duration-300"
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -108,61 +117,86 @@ const Hero = () => {
               </motion.button>
               <motion.button
                 onClick={() => scrollToSection("contact")}
-                className="bg-white text-gray-800 font-medium py-2 px-6 rounded-full shadow-lg border border-gray-200 hover:shadow-xl transition duration-300"
+                className="bg-white text-gray-800 font-semibold py-4 px-8 rounded-full shadow-lg border border-gray-200 hover:shadow-xl hover:border-blue-300 transition-all duration-300 transform hover:scale-105"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Get In Touch
+                Get in Touch
               </motion.button>
-            </div>
+            </motion.div>
           </motion.div>
 
           <motion.div
-            className="flex justify-center"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex justify-center lg:justify-end"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
           >
             <div className="relative">
-              <div className="w-80 h-80 md:w-90 md:h-90 rounded-full overflow-hidden border-4 border-white shadow-xl">
+              <div className="w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white shadow-2xl">
                 <div className="relative w-full h-full rounded-full overflow-hidden">
                   <Image
-                    src="/hero-image.jpeg"
-                    alt="Abbas Qadir"
+                    src="/pic-office.jpeg"
+                    alt="Abbas Qadir - Web Designer & Developer"
                     fill
                     style={{ objectFit: "cover" }}
                     className="rounded-full"
                     priority
                   />
                 </div>
-
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-500/10 to-indigo-500/10 pointer-events-none"></div>
-                <div className="absolute inset-0 rounded-full border border-white/20 pointer-events-none"></div>
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/10 to-indigo-500/10 pointer-events-none"></div>
               </div>
 
+              {/* Floating elements */}
               <motion.div
-                className="absolute -bottom-4 -right-4 bg-white rounded-full p-4 shadow-lg"
+                className="absolute -top-4 -right-4 bg-white rounded-full p-3 shadow-lg border border-gray-100"
                 animate={{
-                  rotate: [0, 10, -10, 10, 0],
+                  y: [0, -10, 0],
                 }}
                 transition={{
                   repeat: Infinity,
-                  repeatType: "reverse",
-                  duration: 5,
+                  duration: 3,
+                  ease: "easeInOut",
                 }}
               >
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-purple-600"
+                  className="w-6 h-6 text-blue-600"
                   fill="none"
-                  viewBox="0 0 24 24"
                   stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+              </motion.div>
+
+              <motion.div
+                className="absolute -bottom-4 -left-4 bg-white rounded-full p-3 shadow-lg border border-gray-100"
+                animate={{
+                  y: [0, 10, 0],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 3,
+                  delay: 1.5,
+                  ease: "easeInOut",
+                }}
+              >
+                <svg
+                  className="w-6 h-6 text-indigo-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"
                   />
                 </svg>
               </motion.div>

@@ -1,20 +1,30 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Abbas | Portfolio",
-  description: "Personal portfolio showcasing my projects and skills as a CS student",
+  title: "Abbas Qadir - Web Designer & Developer",
+  description:
+    "Professional web designer and developer specializing in creating intuitive and engaging digital experiences. View my portfolio of projects and services.",
+  keywords: [
+    "web designer",
+    "web developer",
+    "UI/UX design",
+    "frontend development",
+    "portfolio",
+  ],
+  authors: [{ name: "Abbas Qadir" }],
+  openGraph: {
+    title: "Abbas Qadir - Web Designer & Developer",
+    description:
+      "Professional web designer and developer specializing in creating intuitive and engaging digital experiences.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -25,13 +35,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
+        className={`${inter.variable} antialiased flex flex-col min-h-screen`}
       >
-        
-        <main  className="flex-grow bg-gray-100 text-gray-800">
-          {children}
-        </main>
-        
+        <main className="flex-grow">{children}</main>
       </body>
     </html>
   );

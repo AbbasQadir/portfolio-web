@@ -1,8 +1,9 @@
 "use client";
 // components/Projects.tsx
 import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
 import Image from "next/image";
-import { useState } from "react";
 
 interface Project {
   id: number;
@@ -11,150 +12,215 @@ interface Project {
   tech: string[];
   image: string;
   link: string;
-  category: string;
+  liveLink?: string;
 }
 
 const Projects = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   const projects: Project[] = [
     {
       id: 1,
       title: "Solostack",
-      description: "A startup company focused on providing solo developers with tools and resources to build and scale their business efficiently.",
+      description:
+        "A comprehensive platform designed for solo developers, providing essential tools and resources to build and scale their business efficiently. Features include project management, resource libraries, and community features.",
       tech: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase"],
       image: "/proj-1.png",
-      link: "https://github.com/AbbasQadir/solostacked", // Add your Solostack link here
-      category: "startup"
+      link: "https://github.com/AbbasQadir/solostacked",
+      liveLink: "https://solostack.vercel.app",
     },
     {
       id: 2,
       title: "Construction Company Website",
-      description: "Modern and responsive website for a construction company, featuring project portfolios, service listings, and client testimonials.",
-      tech: ["HTML", "CSS", "JS", "Bootstrap"],
-      image: "/proj-2.png", // Replace with your image path
-      link: "#", // Add your construction website link here
-      category: "web"
+      description:
+        "A modern, responsive website for a construction company showcasing their portfolio, services, and client testimonials. Designed with a focus on trust, professionalism, and easy navigation.",
+      tech: ["HTML", "CSS", "JavaScript", "Bootstrap"],
+      image: "/proj-2.png",
+      link: "https://github.com/AbbasQadir/construction-website",
     },
     {
       id: 3,
       title: "Mind & Motion E-commerce",
-      description: "University Team Project- A e-commerce website that helps users achieve their health and fitness goals while supporting their hobbies, offering a wide range of products with all core functionalities of a typical e-commerce site.",
-      tech: ["PHP", "HTML", "CSS", "JS", "MySQL"],
-      image: "/proj-3.png", // Replace with your image path
-      link: "https://github.com/AbbasQadir/Team-1", // Add your library link here
-      category: "javascript"
+      description:
+        "A full-featured e-commerce platform for health and fitness products. Includes user authentication, product catalog, shopping cart, payment processing, and admin dashboard.",
+      tech: ["PHP", "HTML", "CSS", "JavaScript", "MySQL"],
+      image: "/proj-3.png",
+      link: "https://github.com/AbbasQadir/Team-1",
     },
-  
   ];
 
-  const [imageErrors, setImageErrors] = useState<{ [key: number]: boolean }>({});
-
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 50 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.8 } }
-  };
-
   return (
-    <section id="projects" className="py-16">
+    <section id="projects" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold">My Projects</h2>
-          <div className="mt-2 h-1 w-24 bg-gradient-to-r from-purple-600 to-indigo-600 mx-auto rounded"></div>
-          <p className="mt-4 text-lg text-gray-600">Check out some of my recent work</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            Featured Projects
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Here are some of my recent projects that showcase my skills in web
+            design and development.
+          </p>
         </motion.div>
-        
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-        >
-          {projects.map((project) => (
-            <motion.div 
-              key={project.id} 
-              className="bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
-              variants={item}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="group h-full"
             >
-              <div className="h-48 relative overflow-hidden">
-                {imageErrors[project.id] ? (
-                  // Fallback gradient for when image fails to load
-                  <div className="w-full h-full bg-gradient-to-br from-purple-400 to-indigo-500 flex items-center justify-center">
-                    <div className="text-white text-xl font-bold">{project.title}</div>
-                  </div>
-                ) : (
+              <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 h-full flex flex-col">
+                <div className="relative h-64 overflow-hidden flex-shrink-0">
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority={project.id <= 3} // Load first 3 images immediately
-                    onError={() => {
-                      setImageErrors(prev => ({ ...prev, [project.id]: true }));
-                    }}
                   />
-                )}
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold">{project.title}</h3>
-                <p className="mt-2 text-gray-600">{project.description}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.tech.map((tech, index) => (
-                    <span 
-                      key={index} 
-                      className="px-3 py-1 bg-purple-100 text-purple-800 text-xs font-medium rounded-full"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                  {/* Overlay with links */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="flex space-x-4">
+                      {project.liveLink && (
+                        <motion.a
+                          href={project.liveLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-white text-gray-900 px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors duration-300"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          Live Demo
+                        </motion.a>
+                      )}
+                      <motion.a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-blue-600 text-white px-4 py-2 rounded-full font-medium hover:bg-blue-700 transition-colors duration-300"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        View Code
+                      </motion.a>
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-6">
-                  <a 
-                    href={project.link} 
-                    className="text-purple-600 hover:text-purple-800 font-medium flex items-center transition-colors duration-300"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View Project on GitHub
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </a>
+
+                <div className="p-8 flex-1 flex flex-col">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-300">
+                    {project.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed mb-6 flex-1">
+                    {project.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {project.tech.map((tech, techIndex) => (
+                      <span
+                        key={techIndex}
+                        className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="mt-auto">
+                    <div className="flex space-x-4">
+                      {project.liveLink && (
+                        <a
+                          href={project.liveLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-800 font-medium flex items-center transition-colors duration-300"
+                        >
+                          Live Demo
+                          <svg
+                            className="w-4 h-4 ml-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                            />
+                          </svg>
+                        </a>
+                      )}
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-600 hover:text-gray-900 font-medium flex items-center transition-colors duration-300"
+                      >
+                        View Code
+                        <svg
+                          className="w-4 h-4 ml-1"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                          />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
           ))}
-        </motion.div>
-        
-        <div className="mt-12 text-center">
-          <a 
-            href="https://github.com/AbbasQadir?tab=repositories" 
-            className="inline-flex items-center text-purple-600 hover:text-purple-800 font-medium transition-colors duration-300"
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-16 text-center"
+        >
+          <a
+            href="https://github.com/AbbasQadir?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
+            className="inline-flex items-center bg-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
           >
             View All Projects on GitHub
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+            <svg
+              className="w-5 h-5 ml-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
             </svg>
           </a>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
