@@ -1,7 +1,6 @@
 "use client";
 // components/Contact.tsx
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
 const Contact = () => {
@@ -66,7 +65,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-white">
+    <section id="contact" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -84,15 +83,15 @@ const Contact = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch h-full">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="flex flex-col h-full space-y-8"
           >
-            <div className="bg-gray-50 p-8 rounded-2xl">
+            <div className="bg-white shadow-lg p-6 rounded-2xl">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
                 Get in Touch
               </h3>
@@ -178,7 +177,75 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-8 rounded-2xl text-white">
+            {/* Curved Dotted Line with Animated Paper Plane at Bottom */}
+            <div
+              className="relative flex flex-col items-center my-1"
+              style={{ minHeight: "120px", height: "120px" }}
+            >
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                <svg
+                  width="220"
+                  height="120"
+                  viewBox="0 0 220 120"
+                  fill="none"
+                  style={{ zIndex: 0 }}
+                >
+                  <path
+                    d="M20 40 Q 60 20, 120 80 Q 180 140, 190 100"
+                    stroke="#60A5FA"
+                    strokeWidth="2"
+                    strokeDasharray="2 6"
+                    fill="none"
+                  />
+                </svg>
+                <motion.div
+                  initial={{ y: 0 }}
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 1.5,
+                    ease: "easeInOut",
+                  }}
+                  style={{
+                    position: "absolute",
+                    left: "156px",
+                    top: "94px",
+                    transform: "rotate(30deg)",
+                  }}
+                >
+                  <svg
+                    className="w-10 h-10 text-blue-400 drop-shadow-lg"
+                    viewBox="0 0 48 48"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M4 24L44 4L34 44L23 31L4 24Z"
+                      fill="#3B82F6"
+                      stroke="#2563EB"
+                      strokeWidth="2"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M23 31L34 44"
+                      stroke="#2563EB"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M23 31L28 20"
+                      stroke="#2563EB"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </motion.div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-8 rounded-2xl text-white mt-6">
               <h3 className="text-2xl font-bold mb-4">Ready to Start?</h3>
               <p className="mb-6 text-blue-100">
                 I'm currently available for freelance work and full-time
@@ -215,7 +282,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-gray-50 p-8 rounded-2xl"
+            className="bg-white shadow-lg p-8 rounded-2xl h-full flex flex-col justify-between"
           >
             <h3 className="text-2xl font-bold text-gray-900 mb-8">
               Send a Message

@@ -97,8 +97,7 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="text-xl text-gray-600 leading-relaxed max-w-lg"
             >
-              Creating intuitive and engaging digital experiences that help
-              businesses grow and succeed online.
+              Freelance web designer & developer, building beautiful websites using modern technologies.
             </motion.p>
 
             <motion.div

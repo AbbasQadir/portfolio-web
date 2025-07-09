@@ -68,3 +68,7 @@ body {
   transition: color 0.2s ease, background-color 0.2s ease,
     border-color 0.2s ease;
 }
+
+.footer-glow {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+}

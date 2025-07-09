@@ -5,59 +5,31 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="bg-gray-800 text-gray-100 py-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           {/* Logo and Description */}
           <div className="text-center md:text-left">
-            <h3 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent mb-2">
-              Abbas Qadir
-            </h3>
-            <p className="text-gray-400 text-sm">
-              Web Designer & Developer creating digital experiences that matter.
+            <p className="text-gray-100 text-sm footer-glow">
+              Web Designer & Developer
             </p>
           </div>
 
-          {/* Quick Links */}
-          <div className="text-center">
-            <h4 className="font-semibold mb-4">Quick Links</h4>
-            <div className="flex flex-wrap justify-center gap-6 text-sm">
-              <a
-                href="#about"
-                className="text-gray-400 hover:text-white transition-colors duration-300"
-              >
-                About
-              </a>
-              <a
-                href="#services"
-                className="text-gray-400 hover:text-white transition-colors duration-300"
-              >
-                Services
-              </a>
-              <a
-                href="#projects"
-                className="text-gray-400 hover:text-white transition-colors duration-300"
-              >
-                Projects
-              </a>
-              <a
-                href="#contact"
-                className="text-gray-400 hover:text-white transition-colors duration-300"
-              >
-                Contact
-              </a>
-            </div>
+          {/* Copyright Centered */}
+          <div className="text-center flex items-center justify-center">
+            <p className="text-gray-100 text-sm footer-glow">
+              © {currentYear} Abbas Qadir
+            </p>
           </div>
 
-          {/* Social Links */}
-          <div className="text-center md:text-right">
-            <h4 className="font-semibold mb-4">Connect</h4>
-            <div className="flex justify-center md:justify-end space-x-4">
+          {/* Social Icons Only */}
+          <div className="col-span-2 md:col-span-1 flex justify-center md:justify-end">
+            <div className="flex space-x-4">
               <a
                 href="https://github.com/AbbasQadir"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors duration-300 p-2 hover:bg-gray-800 rounded-full"
+                className="text-gray-100 hover:text-blue-400 transition-colors duration-300 p-2 hover:bg-gray-700 rounded-full footer-glow"
                 aria-label="GitHub"
               >
                 <svg
@@ -72,7 +44,7 @@ const Footer = () => {
                 href="https://www.linkedin.com/in/abbas-qadir-b37676212/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors duration-300 p-2 hover:bg-gray-800 rounded-full"
+                className="text-gray-100 hover:text-blue-400 transition-colors duration-300 p-2 hover:bg-gray-700 rounded-full footer-glow"
                 aria-label="LinkedIn"
               >
                 <svg
@@ -85,7 +57,7 @@ const Footer = () => {
               </a>
               <a
                 href="mailto:Abbasqalami2004@gmail.com"
-                className="text-gray-400 hover:text-white transition-colors duration-300 p-2 hover:bg-gray-800 rounded-full"
+                className="text-gray-100 hover:text-blue-400 transition-colors duration-300 p-2 hover:bg-gray-700 rounded-full footer-glow"
                 aria-label="Email"
               >
                 <svg
@@ -104,13 +76,6 @@ const Footer = () => {
               </a>
             </div>
           </div>
-        </div>
-
-        {/* Copyright */}
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-gray-400 text-sm">
-            © {currentYear} Abbas Qadir. All rights reserved.
-          </p>
         </div>
       </div>
     </footer>

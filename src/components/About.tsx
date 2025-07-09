@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 
@@ -35,22 +34,25 @@ const About = () => {
           >
             <div className="space-y-6">
               <p className="text-xl text-gray-600 leading-relaxed">
-                I'm a passionate web designer and developer with a focus on
-                creating intuitive and engaging digital experiences. With
-                expertise in both design and development, I bridge the gap
-                between aesthetics and functionality to deliver websites that
-                not only look great but also perform exceptionally.
+                I'm a web designer and developer who’s passionate about crafting
+                clean, intuitive, and engaging digital experiences. I blend
+                design and development to create websites that don’t just look
+                great but work beautifully, too. With an eye for detail and a
+                focus on usability, I love building digital products that feel
+                as good as they look.
               </p>
               <p className="text-xl text-gray-600 leading-relaxed">
-                My approach combines user-centered design principles with modern
-                development practices. I believe that the best digital products
-                come from understanding user needs, creating thoughtful designs,
-                and implementing them with clean, efficient code.
+                I take a user-first approach, combining thoughtful design with
+                modern development practices. To me, the best digital
+                experiences start with understanding real user needs, then
+                bringing them to life through intentional design and clean,
+                efficient code.
               </p>
               <p className="text-xl text-gray-600 leading-relaxed">
-                Whether it's a simple landing page or a complex web application,
-                I work closely with clients to understand their goals and create
-                solutions that drive results and exceed expectations.
+                Whether it’s a simple landing page or a complex web app, I
+                collaborate closely with clients to understand their goals and
+                build solutions that deliver real results and often exceed
+                expectations
               </p>
             </div>
 

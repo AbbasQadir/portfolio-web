@@ -1,88 +1,22 @@
 "use client";
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 const services = [
   {
-    title: "UI/UX Design",
+    title: "Web Design",
     description:
-      "Creating beautiful, intuitive user interfaces and seamless user experiences that delight users and drive engagement.",
-    icon: (
-      <svg
-        className="w-8 h-8"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"
-        />
-      </svg>
-    ),
+      "Beautiful, intuitive, and user-focused website designs that reflect your brand and engage your audience. Includes UI/UX, prototyping, and branding.",
+    image: "/design-image.jpg", // You can change this to a more appropriate image if desired
+    imagePosition: "left",
   },
   {
-    title: "Responsive Web Development",
+    title: "Web Development",
     description:
-      "Building fast, responsive websites that work perfectly on all devices and provide an excellent user experience.",
-    icon: (
-      <svg
-        className="w-8 h-8"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
-        />
-      </svg>
-    ),
-  },
-  {
-    title: "Interactive Prototyping",
-    description:
-      "Developing interactive prototypes that bring your ideas to life and help validate concepts before full development.",
-    icon: (
-      <svg
-        className="w-8 h-8"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M13 10V3L4 14h7v7l9-11h-7z"
-        />
-      </svg>
-    ),
-  },
-  {
-    title: "Custom Website Builds",
-    description:
-      "Creating bespoke websites tailored to your brand, goals, and audience with modern technologies and best practices.",
-    icon: (
-      <svg
-        className="w-8 h-8"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-        />
-      </svg>
-    ),
+      "Modern, responsive, and high-performance websites built with the latest technologies. Custom features, seamless animations, and optimized for all devices.",
+    image: "/service-image1.jpg", // You can change this to a more appropriate image if desired
+    imagePosition: "right",
   },
 ];
 
@@ -95,22 +29,34 @@ const ServiceCard = ({
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
+  const isImageLeft = index % 2 === 0;
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group"
+      transition={{ duration: 0.7, delay: index * 0.2 }}
+      className={`flex flex-col md:flex-row ${
+        !isImageLeft ? "md:flex-row-reverse" : ""
+      } items-center mb-16`}
     >
-      <div className="flex items-center space-x-4 mb-6">
-        <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-3 rounded-xl text-white group-hover:scale-110 transition-transform duration-300">
-          {service.icon}
-        </div>
-        <h3 className="text-xl font-semibold text-gray-900">{service.title}</h3>
+      <div className="w-full md:w-1/2 flex justify-center mb-6 md:mb-0">
+        <Image
+          src={service.image}
+          alt={service.title}
+          width={400}
+          height={260}
+          className="rounded-xl object-cover w-full max-w-[400px] h-auto"
+        />
       </div>
-      <p className="text-gray-600 leading-relaxed">{service.description}</p>
+      <div className="w-full md:w-1/2 px-0 md:px-10 text-center md:text-left">
+        <h3 className="text-3xl font-bold text-gray-900 mb-4">
+          {service.title}
+        </h3>
+        <p className="text-lg text-gray-600 leading-relaxed">
+          {service.description}
+        </p>
+      </div>
     </motion.div>
   );
 };
@@ -130,16 +76,14 @@ const Services = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Services I Offer
+            What I Offer
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            From concept to launch, I provide comprehensive web design and
-            development services that help businesses establish a strong online
-            presence.
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            I specialize in designing and developing websites that help your
+            business grow. Here’s how I can help you succeed online:
           </p>
         </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div>
           {services.map((service, index) => (
             <ServiceCard key={service.title} service={service} index={index} />
           ))}
