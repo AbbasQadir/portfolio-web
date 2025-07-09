@@ -426,7 +426,7 @@ const Contact = () => {
                       />
                     </svg>
                     <p className="text-green-800 font-medium">
-                      Message sent successfully! I'll get back to you soon.
+                    Thanks for reaching out! I’ll be in touch with you shortly.
                     </p>
                   </div>
                 </motion.div>

@@ -7,24 +7,24 @@ const Footer = () => {
   return (
     <footer className="bg-gray-800 text-gray-100 py-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+        <div className="flex flex-col md:grid md:grid-cols-3 gap-4 md:gap-8 items-center text-center md:text-left">
           {/* Logo and Description */}
-          <div className="text-center md:text-left">
+          <div className="mb-2 md:mb-0 w-full flex flex-col items-center md:items-start">
             <p className="text-gray-100 text-sm footer-glow">
               Web Designer & Developer
             </p>
           </div>
 
           {/* Copyright Centered */}
-          <div className="text-center flex items-center justify-center">
+          <div className="mb-2 md:mb-0 w-full flex flex-col items-center">
             <p className="text-gray-100 text-sm footer-glow">
               © {currentYear} Abbas Qadir
             </p>
           </div>
 
           {/* Social Icons Only */}
-          <div className="col-span-2 md:col-span-1 flex justify-center md:justify-end">
-            <div className="flex space-x-4">
+          <div className="w-full flex flex-col items-center md:items-end">
+            <div className="flex justify-center space-x-4">
               <a
                 href="https://github.com/AbbasQadir"
                 target="_blank"
