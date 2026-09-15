@@ -143,6 +143,27 @@ section[id] {
   }
 }
 
+/* Faint dot grid for the hero. Masked so it fades out rather than stopping at
+   an edge, which is what made the previous corner blur read as banding. */
+.dot-grid {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgb(13 13 18 / 0.08) 1px,
+    transparent 0
+  );
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 75% 70% at 50% 0%,
+    #000 30%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 75% 70% at 50% 0%,
+    #000 30%,
+    transparent 100%
+  );
+}
+
 /* Hover lift, kept off touch devices where there is no hover to reward it. */
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .lift {

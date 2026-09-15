@@ -2,29 +2,28 @@ import Image from "next/image";
 import { site } from "@/lib/site";
 
 const facts = [
-  { label: "Degree", value: "BSc (Hons) Computer Science, Aston" },
-  { label: "Shipped", value: "Client sites live in production" },
-  { label: "Focus", value: "Full-stack web · applied ML" },
+  { label: "Degree", value: "BSc (Hons) Computer Science — Aston University" },
+  { label: "Experience", value: "Two years freelance, client sites in production" },
+  { label: "Stack", value: "TypeScript · React · Next.js · Python" },
 ];
 
 const Hero = () => {
   return (
-    <section
-      id="top"
-      className="relative overflow-hidden pt-28 pb-16 md:pt-40 md:pb-28"
-    >
-      {/* Soft accent wash behind the headline. Purely decorative, so it is
-          hidden from assistive tech and cannot intercept pointer events. */}
+    <section id="top" className="relative pt-28 pb-14 md:pt-36 md:pb-20">
+      {/* Decorative texture only — hidden from assistive tech, and it cannot
+          intercept pointer events. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-40 -left-32 w-[36rem] h-[36rem] rounded-full bg-accent/10 blur-3xl"
+        className="dot-grid pointer-events-none absolute inset-0"
       />
 
       <div className="relative max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 items-center">
+        {/* Both columns start on the same line, so the composition has a
+            shared top edge instead of the photo floating. */}
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_auto] gap-12 lg:gap-16 items-start">
           {/* No scroll-reveal here: this is the first thing a visitor on
               mobile data needs to read, so it paints immediately. */}
-          <div>
+          <div className="max-w-2xl">
             <p className="animate-in inline-flex max-w-full items-center gap-2.5 text-sm font-medium text-ink-soft bg-surface border border-line rounded-full pl-3 pr-4 py-1.5">
               <span className="relative flex w-2 h-2 shrink-0" aria-hidden="true">
                 <span className="absolute inline-flex w-full h-full rounded-full bg-accent opacity-60" />
@@ -35,33 +34,14 @@ const Hero = () => {
               </span>
             </p>
 
-            <h1 className="animate-in animate-in-delay-1 mt-6 text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-[4.25rem] font-bold text-ink">
+            <h1 className="animate-in animate-in-delay-1 mt-7 text-[2.5rem] leading-[1.04] sm:text-[3.5rem] lg:text-[3.75rem] font-bold text-ink">
               I build software
               <br />
               that actually{" "}
-              <span className="whitespace-nowrap">
-                <span className="relative inline-block text-accent">
-                  ships
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 200 12"
-                    preserveAspectRatio="none"
-                    className="absolute left-0 -bottom-[0.12em] w-full h-2.5 text-accent/35"
-                  >
-                    <path
-                      d="M2 9C46 3 154 3 198 8"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </span>
-                .
-              </span>
+              <span className="text-accent">ships.</span>
             </h1>
 
-            <p className="animate-in animate-in-delay-2 mt-7 text-lg sm:text-xl text-muted leading-relaxed max-w-xl">
+            <p className="animate-in animate-in-delay-2 mt-7 text-lg sm:text-xl text-muted leading-relaxed max-w-lg">
               Computer Science graduate running a web studio that puts real
               client sites into production — and taking machine learning
               projects from raw data through to results you can actually
@@ -98,33 +78,22 @@ const Hero = () => {
                 Download CV
               </a>
             </div>
-
-            <dl className="animate-in animate-in-delay-3 mt-12 grid sm:grid-cols-3 gap-x-6 gap-y-5 border-t border-line pt-8">
-              {facts.map((f) => (
-                <div key={f.label}>
-                  <dt className="text-xs font-semibold uppercase tracking-wider text-muted">
-                    {f.label}
-                  </dt>
-                  <dd className="mt-1.5 text-sm font-medium text-ink leading-snug">
-                    {f.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
           </div>
 
-          <div className="animate-in animate-in-delay-2 order-first lg:order-last flex justify-center lg:justify-end">
+          {/* Text first in the DOM, so on a phone the headline and CTA sit
+              above the fold and the photo follows rather than displacing them. */}
+          <div className="animate-in animate-in-delay-2 justify-self-center lg:justify-self-end">
             <div className="relative">
               <div
                 aria-hidden="true"
-                className="absolute inset-0 translate-x-3 translate-y-3 rounded-[2rem] bg-ink"
+                className="absolute inset-0 translate-x-3.5 translate-y-3.5 rounded-[1.75rem] bg-ink"
               />
-              <div className="relative w-56 h-56 sm:w-72 sm:h-72 lg:w-[22rem] lg:h-[22rem] rounded-[2rem] overflow-hidden bg-line">
+              <div className="relative w-56 sm:w-72 lg:w-[20rem] aspect-[4/5] rounded-[1.75rem] overflow-hidden bg-line">
                 <Image
                   src="/portrait.jpg"
                   alt="Abbas Qadir"
                   fill
-                  sizes="(max-width: 640px) 224px, (max-width: 1024px) 288px, 352px"
+                  sizes="(max-width: 640px) 224px, (max-width: 1024px) 288px, 320px"
                   className="object-cover"
                   priority
                   fetchPriority="high"
@@ -133,6 +102,21 @@ const Hero = () => {
             </div>
           </div>
         </div>
+
+        {/* Full-width rail so the facts read as a footer to the whole hero
+            rather than as a third thing inside the left column. */}
+        <dl className="animate-in animate-in-delay-3 mt-14 md:mt-20 grid sm:grid-cols-3 gap-x-8 gap-y-6 border-t border-line pt-8">
+          {facts.map((f) => (
+            <div key={f.label}>
+              <dt className="text-xs font-semibold uppercase tracking-wider text-muted">
+                {f.label}
+              </dt>
+              <dd className="mt-2 text-[0.95rem] font-medium text-ink leading-snug">
+                {f.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );
