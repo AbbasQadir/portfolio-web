@@ -143,6 +143,36 @@ section[id] {
   }
 }
 
+/* Confirmation panel swapping in where the form was. */
+@media (prefers-reduced-motion: no-preference) {
+  .pop-in {
+    animation: pop-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  /* The tick draws itself once the panel has settled. */
+  .tick path {
+    stroke-dasharray: 26;
+    stroke-dashoffset: 26;
+    animation: draw-tick 0.45s cubic-bezier(0.65, 0, 0.35, 1) 0.18s forwards;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes draw-tick {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 /* Faint dot grid for the hero. Masked so it fades out rather than stopping at
    an edge, which is what made the previous corner blur read as banding. */
 .dot-grid {
