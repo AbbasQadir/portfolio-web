@@ -1,22 +1,23 @@
-// app/page.tsx
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Projects from "@/components/Projects";
-import Contact from "@/components/Contact";
 import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import Work from "@/components/Work";
+import Skills from "@/components/Skills";
+import About from "@/components/About";
+import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import Services from "@/components/Services";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-gray-900">
+    <>
       <Navbar />
-      <Hero />
-      <About />
-      <Services />
-      <Projects />
-      <Contact />
+      <main id="main">
+        <Hero />
+        <Work />
+        <Skills />
+        <About />
+        <Contact />
+      </main>
       <Footer />
-    </main>
+    </>
   );
 }

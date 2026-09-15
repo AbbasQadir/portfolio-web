@@ -1,206 +1,137 @@
-"use client";
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
+import { site } from "@/lib/site";
 
-const roles = ["Web Designer", "Web Developer", "UI & UX Designer"];
-
-const Typewriter = () => {
-  const [index, setIndex] = useState(0);
-  const [subIndex, setSubIndex] = useState(0);
-  const [deleting, setDeleting] = useState(false);
-  const [blink, setBlink] = useState(true);
-
-  useEffect(() => {
-    if (index >= roles.length) setIndex(0);
-
-    const timeout = setTimeout(
-      () => {
-        setSubIndex((prev) => (deleting ? prev - 1 : prev + 1));
-
-        if (!deleting && subIndex === roles[index].length) {
-          setTimeout(() => setDeleting(true), 1500);
-        } else if (deleting && subIndex === 0) {
-          setDeleting(false);
-          setIndex((prev) => (prev + 1) % roles.length);
-        }
-      },
-      deleting ? 50 : 100
-    );
-
-    return () => clearTimeout(timeout);
-  }, [subIndex, deleting, index]);
-
-  useEffect(() => {
-    const blinkInterval = setInterval(() => {
-      setBlink((prev) => !prev);
-    }, 500);
-    return () => clearInterval(blinkInterval);
-  }, []);
-
-  return (
-    <p className="text-2xl md:text-3xl text-blue-600 font-semibold">
-      {roles[index].substring(0, subIndex)}
-      <span
-        className={`${blink ? "opacity-100" : "opacity-0"} transition-opacity`}
-      >
-        |
-      </span>
-    </p>
-  );
-};
+const facts = [
+  { label: "Degree", value: "BSc (Hons) Computer Science, Aston" },
+  { label: "Shipped", value: "Client sites live in production" },
+  { label: "Focus", value: "Full-stack web · applied ML" },
+];
 
 const Hero = () => {
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 80,
-        behavior: "smooth",
-      });
-    }
-  };
-
   return (
     <section
-      id="home"
-      className="pt-24 min-h-screen flex flex-col justify-center bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/30"
+      id="top"
+      className="relative overflow-hidden pt-28 pb-16 md:pt-40 md:pb-28"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <motion.div
-            className="space-y-8"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="space-y-4"
-            >
-              <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-                Hi, I'm{" "}
-                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  Abbas
+      {/* Soft accent wash behind the headline. Purely decorative, so it is
+          hidden from assistive tech and cannot intercept pointer events. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-40 -left-32 w-[36rem] h-[36rem] rounded-full bg-accent/10 blur-3xl"
+      />
+
+      <div className="relative max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 items-center">
+          {/* No scroll-reveal here: this is the first thing a visitor on
+              mobile data needs to read, so it paints immediately. */}
+          <div>
+            <p className="animate-in inline-flex max-w-full items-center gap-2.5 text-sm font-medium text-ink-soft bg-surface border border-line rounded-full pl-3 pr-4 py-1.5">
+              <span className="relative flex w-2 h-2 shrink-0" aria-hidden="true">
+                <span className="absolute inline-flex w-full h-full rounded-full bg-accent opacity-60" />
+                <span className="relative inline-flex w-2 h-2 rounded-full bg-accent" />
+              </span>
+              <span className="min-w-0">
+                Open to graduate developer roles · {site.location}
+              </span>
+            </p>
+
+            <h1 className="animate-in animate-in-delay-1 mt-6 text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-[4.25rem] font-bold text-ink">
+              I build software
+              <br />
+              that actually{" "}
+              <span className="whitespace-nowrap">
+                <span className="relative inline-block text-accent">
+                  ships
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 200 12"
+                    preserveAspectRatio="none"
+                    className="absolute left-0 -bottom-[0.12em] w-full h-2.5 text-accent/35"
+                  >
+                    <path
+                      d="M2 9C46 3 154 3 198 8"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+                  </svg>
                 </span>
-              </h1>
+                .
+              </span>
+            </h1>
 
-              {/* Animated Typewriter */}
-              <Typewriter />
-            </motion.div>
+            <p className="animate-in animate-in-delay-2 mt-7 text-lg sm:text-xl text-muted leading-relaxed max-w-xl">
+              Computer Science graduate running a web studio that puts real
+              client sites into production — and taking machine learning
+              projects from raw data through to results you can actually
+              interpret.
+            </p>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-xl text-gray-600 leading-relaxed max-w-lg"
-            >
-              Freelance web designer & developer, building beautiful websites using modern technologies.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex flex-wrap gap-4"
-            >
-              <motion.button
-                onClick={() => scrollToSection("projects")}
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+            <div className="animate-in animate-in-delay-3 mt-9 flex flex-col sm:flex-row gap-3">
+              <a
+                href="#work"
+                className="inline-flex items-center justify-center gap-2 min-h-[52px] px-7 rounded-full bg-ink text-white font-semibold hover:bg-accent-strong transition-colors duration-200"
               >
-                View My Work
-              </motion.button>
-              <motion.button
-                onClick={() => scrollToSection("contact")}
-                className="bg-white text-gray-800 font-semibold py-4 px-8 rounded-full shadow-lg border border-gray-200 hover:shadow-xl hover:border-blue-300 transition-all duration-300 transform hover:scale-105"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Get in Touch
-              </motion.button>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            className="flex justify-center lg:justify-end"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <div className="relative">
-              <div className="w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white shadow-2xl">
-                <div className="relative w-full h-full rounded-full overflow-hidden">
-                  <Image
-                    src="/pic-office.jpeg"
-                    alt="Abbas Qadir - Web Designer & Developer"
-                    fill
-                    style={{ objectFit: "cover" }}
-                    className="rounded-full"
-                    priority
-                  />
-                </div>
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/10 to-indigo-500/10 pointer-events-none"></div>
-              </div>
-
-              {/* Floating elements */}
-              <motion.div
-                className="absolute -top-4 -right-4 bg-white rounded-full p-3 shadow-lg border border-gray-100"
-                animate={{
-                  y: [0, -10, 0],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 3,
-                  ease: "easeInOut",
-                }}
-              >
+                See my work
                 <svg
-                  className="w-6 h-6 text-blue-600"
+                  className="w-4 h-4"
+                  viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  viewBox="0 0 24 24"
+                  strokeWidth={2.5}
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    d="M12 5v14m0 0l-6-6m6 6l6-6"
                   />
                 </svg>
-              </motion.div>
-
-              <motion.div
-                className="absolute -bottom-4 -left-4 bg-white rounded-full p-3 shadow-lg border border-gray-100"
-                animate={{
-                  y: [0, 10, 0],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 3,
-                  delay: 1.5,
-                  ease: "easeInOut",
-                }}
+              </a>
+              <a
+                href={site.cv}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 min-h-[52px] px-7 rounded-full bg-surface text-ink font-semibold border border-line hover:border-accent hover:text-accent-strong transition-colors duration-200"
               >
-                <svg
-                  className="w-6 h-6 text-indigo-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"
-                  />
-                </svg>
-              </motion.div>
+                Download CV
+              </a>
             </div>
-          </motion.div>
+
+            <dl className="animate-in animate-in-delay-3 mt-12 grid sm:grid-cols-3 gap-x-6 gap-y-5 border-t border-line pt-8">
+              {facts.map((f) => (
+                <div key={f.label}>
+                  <dt className="text-xs font-semibold uppercase tracking-wider text-muted">
+                    {f.label}
+                  </dt>
+                  <dd className="mt-1.5 text-sm font-medium text-ink leading-snug">
+                    {f.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div className="animate-in animate-in-delay-2 order-first lg:order-last flex justify-center lg:justify-end">
+            <div className="relative">
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 translate-x-3 translate-y-3 rounded-[2rem] border border-accent/30"
+              />
+              <div className="relative w-56 h-56 sm:w-72 sm:h-72 lg:w-[22rem] lg:h-[22rem] rounded-[2rem] overflow-hidden bg-line">
+                <Image
+                  src="/portrait.jpg"
+                  alt="Abbas Qadir"
+                  fill
+                  sizes="(max-width: 640px) 224px, (max-width: 1024px) 288px, 352px"
+                  className="object-cover"
+                  priority
+                  fetchPriority="high"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

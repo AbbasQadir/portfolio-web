@@ -1,186 +1,207 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { site } from "@/lib/site";
+
+const SECTIONS = [
+  { id: "work", label: "Work" },
+  { id: "skills", label: "Skills" },
+  { id: "about", label: "About" },
+  { id: "contact", label: "Contact" },
+] as const;
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
-  const handleScroll = useCallback(() => {
-    setScrolled(window.scrollY > 50);
-
-    const sections = ["home", "about", "services", "projects", "contact"];
-    let nearestSection = null;
-    let nearestDistance = Infinity;
-
-    for (const section of sections) {
-      const element = document.getElementById(section);
-      if (element) {
-        const rect = element.getBoundingClientRect();
-        const distance = Math.abs(rect.top - 100);
-        if (distance < nearestDistance) {
-          nearestDistance = distance;
-          nearestSection = section;
-        }
-      }
-    }
-
-    if (nearestSection && activeSection !== nearestSection) {
-      setActiveSection(nearestSection);
-    }
-  }, [activeSection]);
+  const [active, setActive] = useState<string>("");
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  // Highlight whichever section is currently crossing the upper third of the
+  // viewport, so the nav reflects where you actually are on the page.
+  useEffect(() => {
+    const els = SECTIONS.map((s) => document.getElementById(s.id)).filter(
+      (el): el is HTMLElement => el !== null
+    );
+    if (!els.length || !("IntersectionObserver" in window)) return;
 
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      window.scrollTo({
-        top: el.offsetTop - 70,
-        behavior: "smooth",
-      });
-      setIsMenuOpen(false);
-    }
-  };
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+        if (visible) setActive(visible.target.id);
+      },
+      { rootMargin: "-20% 0px -70% 0px" }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  // Stop the page scrolling behind the open mobile menu.
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  // Escape closes the menu — expected of anything that traps the viewport.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   return (
     <>
-      {/* Regular Navbar (hidden when menu is open on mobile) */}
-      <nav
-        className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 ease-in-out
-        ${
+      <header
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-white/95 backdrop-blur-md shadow-lg px-6 py-3 rounded-full max-w-6xl border border-gray-100"
-            : "bg-transparent px-4 py-2 max-w-screen-lg"
-        } w-full ${isMenuOpen ? "hidden md:flex" : ""}`}
+            ? "bg-ground/85 backdrop-blur-md border-b border-line"
+            : "bg-transparent border-b border-transparent"
+        }`}
       >
-        <div
-          className={`flex items-center justify-between transition-all duration-300 ${
-            scrolled ? "gap-6" : "gap-2"
-          }`}
+        <nav
+          aria-label="Primary"
+          className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8"
         >
-          {/* Left Logo/Title */}
-          <div
-            onClick={() => scrollToSection("home")}
-            className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent cursor-pointer hover:from-blue-700 hover:to-indigo-700 transition-all duration-300"
-          >
-            Abbas Qadir
-          </div>
+          <div className="flex items-center justify-between h-16 md:h-20">
+            <a
+              href="#top"
+              className="flex items-center gap-2.5 font-display font-bold text-ink text-[0.95rem] tracking-tight"
+            >
+              <span
+                aria-hidden="true"
+                className="grid place-items-center w-8 h-8 rounded-lg bg-ink text-white text-xs font-bold"
+              >
+                AQ
+              </span>
+              {site.name}
+            </a>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex space-x-8">
-            {["home", "about", "services", "projects", "contact"].map(
-              (section) => (
-                <button
-                  key={section}
-                  onClick={() => scrollToSection(section)}
-                  className={`capitalize text-sm font-medium transition-all duration-200 relative ${
-                    activeSection === section
-                      ? "text-blue-600"
-                      : "text-gray-700 hover:text-blue-600 cursor-pointer"
-                  }`}
+            <ul className="hidden md:flex items-center gap-1">
+              {SECTIONS.map((s) => (
+                <li key={s.id}>
+                  <a
+                    href={`#${s.id}`}
+                    aria-current={active === s.id ? "true" : undefined}
+                    className={`inline-flex items-center px-3.5 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+                      active === s.id
+                        ? "text-ink bg-accent-soft"
+                        : "text-muted hover:text-ink"
+                    }`}
+                  >
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+              <li className="ml-2">
+                <a
+                  href={site.cv}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-semibold bg-ink text-white px-5 py-2.5 rounded-full hover:bg-accent-strong transition-colors duration-200"
                 >
-                  {section}
-                  {activeSection === section && (
-                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full"></div>
-                  )}
-                </button>
-              )
-            )}
-          </div>
+                  CV
+                  <svg
+                    className="w-3.5 h-3.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2.5}
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16"
+                    />
+                  </svg>
+                </a>
+              </li>
+            </ul>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
             <button
-              onClick={toggleMenu}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-              aria-label="Toggle navigation menu"
+              type="button"
+              onClick={() => setOpen(true)}
+              className="md:hidden -mr-2 p-3 rounded-xl text-ink hover:bg-line/60 transition-colors duration-200"
+              aria-label="Open navigation menu"
+              aria-expanded={open}
             >
               <svg
-                className="h-6 w-6 text-gray-700"
-                fill="none"
+                className="w-6 h-6"
                 viewBox="0 0 24 24"
+                fill="none"
                 stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden="true"
               >
-                {isMenuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
+                <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
               </svg>
             </button>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </header>
 
-      {/* Mobile Fullscreen Menu Overlay */}
-      {isMenuOpen && (
-        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-start bg-white/95 backdrop-blur-md">
-          <div className="w-full flex items-center justify-between px-6 pt-8 pb-4 border-b border-gray-100">
-            {/* Logo */}
-            <div
-              onClick={() => {
-                scrollToSection("home");
-                setIsMenuOpen(false);
-              }}
-              className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent cursor-pointer hover:from-blue-700 hover:to-indigo-700 transition-all duration-300"
-            >
-              Abbas Qadir
-            </div>
-            {/* Close Icon */}
+      {open && (
+        <div className="fixed inset-0 z-[100] bg-ground md:hidden flex flex-col">
+          <div className="flex items-center justify-between h-16 px-5 border-b border-line">
+            <span className="flex items-center gap-2.5 font-display font-bold text-ink text-[0.95rem]">
+              <span
+                aria-hidden="true"
+                className="grid place-items-center w-8 h-8 rounded-lg bg-ink text-white text-xs font-bold"
+              >
+                AQ
+              </span>
+              {site.name}
+            </span>
             <button
-              onClick={toggleMenu}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-              aria-label="Close menu"
+              type="button"
+              onClick={() => setOpen(false)}
+              autoFocus
+              className="-mr-2 p-3 rounded-xl text-ink hover:bg-line/60 transition-colors duration-200"
+              aria-label="Close navigation menu"
             >
               <svg
-                className="h-7 w-7 text-gray-700"
-                fill="none"
+                className="w-6 h-6"
                 viewBox="0 0 24 24"
+                fill="none"
                 stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden="true"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
-          <div className="flex flex-col w-full max-w-sm mx-auto mt-8 space-y-4 px-6">
-            {["home", "about", "services", "projects", "contact"].map(
-              (section) => (
-                <button
-                  key={section}
-                  onClick={() => scrollToSection(section)}
-                  className={`w-full text-left capitalize px-4 py-3 rounded-lg font-medium text-lg transition-all duration-200 ${
-                    activeSection === section
-                      ? "text-blue-600 bg-blue-50"
-                      : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
-                  }`}
-                >
-                  {section}
-                </button>
-              )
-            )}
-          </div>
+
+          <nav aria-label="Mobile" className="flex flex-col p-5 gap-1">
+            {SECTIONS.map((s) => (
+              <a
+                key={s.id}
+                href={`#${s.id}`}
+                onClick={() => setOpen(false)}
+                className="flex items-center min-h-[56px] px-4 rounded-xl font-display font-semibold text-xl text-ink hover:bg-surface transition-colors duration-200"
+              >
+                {s.label}
+              </a>
+            ))}
+            <a
+              href={site.cv}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-center min-h-[56px] mt-4 bg-ink text-white rounded-xl font-semibold text-lg"
+            >
+              Download CV
+            </a>
+          </nav>
         </div>
       )}
     </>

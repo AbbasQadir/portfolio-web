@@ -1,32 +1,47 @@
 @import "tailwindcss";
 
+/* ===========================================================================
+   Palette — Graphite + Electric Violet.
+   Ink on a warm-grey ground, one violet accent used only for interactive
+   things (links, CTAs, focus rings) so it never becomes decoration.
+   =========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
-  --primary: #0ea5e9;
-  --primary-dark: #0284c7;
-  --accent: #f8fafc;
-  --muted: #64748b;
+  --ink: #0d0d12;
+  --ink-soft: #24232e;
+  --muted: #6b6878;
+  --line: #e6e4ec;
+
+  --ground: #f6f5f8;
+  --surface: #ffffff;
+
+  --accent: #6d55ff;
+  --accent-strong: #5a41f0;
+  --accent-soft: #f0edff;
+
+  --radius: 0.875rem;
+  --radius-lg: 1.5rem;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-primary-dark: var(--primary-dark);
-  --color-accent: var(--accent);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
   --color-muted: var(--muted);
-  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --color-line: var(--line);
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-display), var(--font-inter), ui-sans-serif,
+    system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ========================================================================= */
 
 * {
   box-sizing: border-box;
@@ -34,41 +49,134 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--ground);
+  color: var(--ink);
   font-family: var(--font-sans);
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  text-wrap: balance;
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
+p {
+  text-wrap: pretty;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+/* Anchor targets must clear the fixed header. */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* One visible focus treatment everywhere, including for the accent buttons
+   that sit on dark backgrounds. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+::selection {
+  background: var(--accent);
+  color: #fff;
 }
 
-/* Smooth transitions */
-* {
-  transition: color 0.2s ease, background-color 0.2s ease,
-    border-color 0.2s ease;
+/* ===========================================================================
+   Reveal animations.
+
+   Content is VISIBLE by default. Elements are hidden only once the inline
+   bootstrap in layout.tsx adds `.js` to <html>, and that same script reveals
+   them — so nothing waits on the React bundle downloading or hydrating. If
+   scripting is off or the bundle fails, the page still reads correctly.
+   =========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  .js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Staggered children, e.g. the skill columns. Capped at 4 so a long list
+     never leaves the last item waiting a noticeable beat. */
+  .js .reveal.is-visible > .stagger:nth-child(1) { transition-delay: 0ms; }
+  .js .reveal.is-visible > .stagger:nth-child(2) { transition-delay: 70ms; }
+  .js .reveal.is-visible > .stagger:nth-child(3) { transition-delay: 140ms; }
+  .js .reveal.is-visible > .stagger:nth-child(n + 4) { transition-delay: 210ms; }
+
+  /* Above-the-fold content animates with pure CSS on first paint, so it never
+     waits on a script at all. */
+  .animate-in {
+    animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .animate-in-delay-1 { animation-delay: 90ms; }
+  .animate-in-delay-2 { animation-delay: 180ms; }
+  .animate-in-delay-3 { animation-delay: 270ms; }
 }
 
-.footer-glow {
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Hover lift, kept off touch devices where there is no hover to reward it. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .lift {
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -18px rgb(13 13 18 / 0.28);
+  }
+
+  .zoom img {
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .zoom:hover img {
+    transform: scale(1.035);
+  }
+}
+
+/* A single underline treatment for inline links: grows from the left on
+   hover instead of switching colour, which keeps contrast constant. */
+.link-underline {
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  padding-bottom: 1px;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .link-underline {
+    background-size: 0% 1px;
+    transition: background-size 0.3s ease;
+  }
+  .link-underline:hover {
+    background-size: 100% 1px;
+  }
 }
