@@ -117,7 +117,7 @@ const Hero = () => {
             <div className="relative">
               <div
                 aria-hidden="true"
-                className="absolute inset-0 translate-x-3 translate-y-3 rounded-[2rem] border border-ink"
+                className="absolute inset-0 translate-x-3 translate-y-3 rounded-[2rem] bg-ink"
               />
               <div className="relative w-56 h-56 sm:w-72 sm:h-72 lg:w-[22rem] lg:h-[22rem] rounded-[2rem] overflow-hidden bg-line">
                 <Image
