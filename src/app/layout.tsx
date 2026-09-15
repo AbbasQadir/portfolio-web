@@ -80,20 +80,29 @@ export const viewport: Viewport = {
 
 // Runs before the React bundle. Owns the whole reveal lifecycle so no content
 // is ever hidden waiting on hydration — see globals.css.
+//
+// The revealed state is a data attribute, NOT a class. React owns className on
+// any element it renders, so a class added out here is wiped the next time that
+// element re-renders — and because the observer has already unobserved it, it
+// never comes back and the content is stuck at opacity 0. React does not manage
+// attributes it was never passed, so data-revealed survives re-renders.
 const revealBootstrap = `
 (function () {
   var d = document;
   d.documentElement.classList.add('js');
+  function reveal(el) {
+    el.setAttribute('data-revealed', '');
+  }
   function start() {
     var els = d.querySelectorAll('.reveal');
     if (!('IntersectionObserver' in window)) {
-      for (var i = 0; i < els.length; i++) els[i].classList.add('is-visible');
+      for (var i = 0; i < els.length; i++) reveal(els[i]);
       return;
     }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) {
-          e.target.classList.add('is-visible');
+          reveal(e.target);
           io.unobserve(e.target);
         }
       });
