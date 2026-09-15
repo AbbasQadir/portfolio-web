@@ -18,7 +18,7 @@ const display = Space_Grotesk({
 
 const TITLE = `${site.name} — Software Developer`;
 const DESCRIPTION =
-  "BSc Computer Science graduate building production web applications and applied machine learning. Next.js, React, TypeScript and Python. Based in the West Midlands, UK.";
+  "BSc Computer Science graduate building production web applications and applied machine learning. Next.js, React, TypeScript and Python. Based in Birmingham, UK.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -37,6 +37,7 @@ export const metadata: Metadata = {
     "React developer",
     "Python developer",
     "machine learning portfolio",
+    "Birmingham developer",
     "West Midlands developer",
   ],
   authors: [{ name: site.name, url: site.url }],
@@ -118,6 +119,7 @@ const structuredData = {
   image: `${site.url}/og-image.jpg`,
   address: {
     "@type": "PostalAddress",
+    addressLocality: "Birmingham",
     addressRegion: "West Midlands",
     addressCountry: "GB",
   },

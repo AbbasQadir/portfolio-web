@@ -6,7 +6,7 @@ export const site = {
   name: "Abbas Qadir",
   url: "https://abbasq.com",
   email: "contact.abbasq@gmail.com",
-  location: "West Midlands, UK",
+  location: "Birmingham, UK",
 
   role: "Software Developer",
   tagline:
@@ -49,7 +49,7 @@ export const projects: Project[] = [
     slug: "aq-sites",
     title: "AQ Sites",
     kind: "Web studio · founder",
-    year: "2025 — present",
+    year: "2024 — present",
     summary:
       "A web design and development studio I run, building and shipping sites for small UK businesses.",
     body:
@@ -143,7 +143,15 @@ export const skillGroups = [
   },
   {
     title: "Tooling & workflow",
-    items: ["Git & GitHub", "Command line", "Vercel", "Jupyter", "Figma", "Technical SEO"],
+    items: [
+      "Git & GitHub",
+      "Command line",
+      "Claude Code",
+      "Codex",
+      "Vercel",
+      "Jupyter",
+      "Technical SEO",
+    ],
   },
 ] as const;
 
@@ -158,14 +166,14 @@ export const education = [
   },
   {
     period: "2020 — 2022",
-    title: "Business & Finance",
+    title: "Level 3 Business and Finance",
     org: "Dudley College of Technology",
   },
 ] as const;
 
 export const experience = [
   {
-    period: "2025 — present",
+    period: "2024 — present",
     title: "Founder & Developer",
     org: "AQ Sites",
     note: "Designing, building and deploying websites for small UK businesses. Client-facing from first call through to launch and handover.",

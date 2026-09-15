@@ -62,9 +62,9 @@ const About = () => {
 
             <div className="reveal mt-7 space-y-5 text-lg text-muted leading-relaxed">
               <p>
-                I&apos;m a Computer Science graduate from Aston University based
-                in the {site.location.replace(", UK", "")}. Alongside the degree
-                I started{" "}
+                I&apos;m a Computer Science graduate from Aston University,
+                based in {site.location.replace(", UK", "")}. Alongside the
+                degree I started{" "}
                 <a
                   href="https://aqsites.co.uk"
                   target="_blank"
@@ -73,7 +73,7 @@ const About = () => {
                 >
                   AQ Sites
                 </a>
-                , a small web studio — which means I&apos;ve spent the last year
+                , a small web studio — which means I&apos;ve spent two years
                 doing the parts of the job that coursework doesn&apos;t cover:
                 scoping work with real clients, making design calls, deploying
                 to production, and then supporting what I shipped.
