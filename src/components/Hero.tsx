@@ -86,7 +86,7 @@ const Hero = () => {
             <div className="relative">
               <div
                 aria-hidden="true"
-                className="absolute inset-0 translate-x-3.5 translate-y-3.5 rounded-[1.75rem] bg-ink"
+                className="absolute inset-0 translate-x-3 translate-y-3 rounded-[1.75rem] bg-ink opacity-100"
               />
               <div className="relative w-56 sm:w-72 lg:w-[20rem] aspect-[4/5] rounded-[1.75rem] overflow-hidden bg-line">
                 <Image
